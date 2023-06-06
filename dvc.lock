@@ -1,0 +1,59 @@
+schema: '2.0'
+stages:
+  data_preparation:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - path: data/raw/fake/
+      md5: 4f67e91abefa678ef11133b900df3341.dir
+      size: 103989866
+      nfiles: 960
+    - path: data/raw/real/
+      md5: 18a85bad5ddff025d5229c65a58d49d5.dir
+      size: 121802629
+      nfiles: 1081
+    outs:
+    - path: data/processed/test/
+      md5: a1fa5a22ed1ee2a9ca64afde35b64a1c.dir
+      size: 22687846
+      nfiles: 204
+    - path: data/processed/train/
+      md5: d00414b64c0d6e3f681dc56206798875.dir
+      size: 157226896
+      nfiles: 1429
+    - path: data/processed/validation/
+      md5: 1c09b261f4ae85bfb573f131635522ed.dir
+      size: 45877753
+      nfiles: 408
+  make_easier:
+    cmd: python src/data/clean_dataset.py
+    deps:
+    - path: data/processed/test/fake/
+      md5: 03551804d9dbaa88020ad490e85eb7f6.dir
+      size: 3346514
+      nfiles: 29
+    - path: data/processed/train/fake/
+      md5: 697f3fc1f3d5164acda0be20b06b8980.dir
+      size: 19554099
+      nfiles: 165
+    - path: data/processed/validation/fake/
+      md5: b8dacd2e4555ac332d3033891c26cb78.dir
+      size: 5574783
+      nfiles: 46
+  train:
+    cmd: python src/models/train_model.py
+    deps:
+    - path: data/processed/train
+      md5: d00414b64c0d6e3f681dc56206798875.dir
+      size: 157226896
+      nfiles: 1429
+    - path: data/processed/validation
+      md5: 1c09b261f4ae85bfb573f131635522ed.dir
+      size: 45877753
+      nfiles: 408
+    outs:
+    - path: models/metrics.txt
+      md5: 19d37f3263b7f91175f31c015f6fd74d
+      size: 30
+    - path: models/model.h5
+      md5: 9c3f7cba0c2f7bb75bec6a7eb260211f
+      size: 64279256

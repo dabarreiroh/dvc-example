@@ -1,0 +1,7 @@
+[core]
+    remote = mydrive
+    autostage = true
+[hydra]
+    enabled = True
+['remote "mydrive"']
+    url = gdrive://1A4Q7V1-UFAHa4d-LWXx2IVeN8NVMd_zC

@@ -1,0 +1,24 @@
+stages:
+  data_preparation:
+    cmd: python src/data/make_dataset.py
+    deps:
+    - data/raw/fake/
+    - data/raw/real/
+    outs:
+    - data/processed/test/
+    - data/processed/train/
+    - data/processed/validation/
+  make_easier:
+    cmd: python src/data/clean_dataset.py
+    deps:
+    - data/processed/test/fake/
+    - data/processed/train/fake/
+    - data/processed/validation/fake/
+  train:
+    cmd: python src/models/train_model.py
+    deps:
+     - data/processed/train
+     - data/processed/validation
+    outs:
+      - models/model.h5
+      - models/metrics.txt
